@@ -1,11 +1,9 @@
-import { Activity, Bell, FileText, Heart, LogOut, MessageSquare, Search, Settings, Thermometer, User, Zap } from 'lucide-react';
-import { useEffect, useState } from 'react';
-import { useNavigate } from 'react-router-dom';
-import { Area, CartesianGrid, Line, LineChart, ResponsiveContainer, Tooltip, XAxis, YAxis } from 'recharts';
-import { getDashboardData } from '../services/dashboardService';
+import { useState, useEffect } from 'react';
+import { LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer, Area } from 'recharts';
+import { Search, Bell, User, Settings, MessageSquare, FileText, LogOut, Activity, Heart, Thermometer, Zap } from 'lucide-react';
+import { getDashboardData } from '../services/dashboardService'
 
 const PetVetDashboard = () => {
-  const navigate = useNavigate();
   const [selectedTab, setSelectedTab] = useState('Stress level');
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
@@ -20,12 +18,9 @@ const PetVetDashboard = () => {
 
   const handleLogout = () => {
     // Clear local storage or any auth data
-    localStorage.removeItem('token');
-    localStorage.removeItem('user');
-    localStorage.removeItem('pet');
-    // Redirect to login page
-    navigate('/login'); 
-    window.location.reload();
+    localStorage.removeItem('token'); // or sessionStorage.clear()
+    // Redirect to login or home
+    navigate('/login');
   };
 
   useEffect(() => {
@@ -126,24 +121,18 @@ const PetVetDashboard = () => {
                 </div>
                 <ul className="space-y-2">
                   <li>
-                    <div
-                      onClick={() => navigate('/dashboard')}
-                      className="flex items-center p-2 bg-teal-100 text-teal-600 rounded-md cursor-pointer"
-                    >
+                    <a className="flex items-center p-2 bg-teal-100 text-teal-600 rounded-md">
                       <div className="w-5 h-5 mr-2 text-teal-600">
                         <Activity className="w-full h-full" />
                       </div>
                       Dashboard
-                    </div>
+                    </a>
                   </li>
                   <li>
-                    <div
-                      onClick={() => navigate('/pet-profile')}
-                      className="flex items-center p-2 text-gray-600 hover:bg-gray-100 rounded-md cursor-pointer"
-                    >
+                    <a className="flex items-center p-2 text-gray-600 hover:bg-gray-100 rounded-md">
                       <User className="w-5 h-5 mr-2 text-gray-500" />
                       Pet profile
-                    </div>
+                    </a>
                   </li>
                 </ul>
               </div>
@@ -154,22 +143,16 @@ const PetVetDashboard = () => {
                 </div>
                 <ul className="space-y-2">
                   <li>
-                    <div
-                      onClick={() => navigate('/health-monitoring')}
-                      className="flex items-center p-2 text-gray-600 hover:bg-gray-100 rounded-md cursor-pointer"
-                    >
+                    <a className="flex items-center p-2 text-gray-600 hover:bg-gray-100 rounded-md">
                       <Activity className="w-5 h-5 mr-2 text-gray-500" />
                       Health monitoring
-                    </div>
+                    </a>
                   </li>
                   <li>
-                    <div
-                      onClick={() => navigate('/appointments')}
-                      className="flex items-center p-2 text-gray-600 hover:bg-gray-100 rounded-md cursor-pointer"
-                    >
+                    <a className="flex items-center p-2 text-gray-600 hover:bg-gray-100 rounded-md">
                       <FileText className="w-5 h-5 mr-2 text-gray-500" />
                       Appointments
-                    </div>
+                    </a>
                   </li>
                 </ul>
               </div>
@@ -180,19 +163,13 @@ const PetVetDashboard = () => {
                 </div>
                 <ul className="space-y-2">
                   <li>
-                    <div
-                      onClick={() => navigate('/chat')}
-                      className="flex items-center p-2 text-gray-600 hover:bg-gray-100 rounded-md cursor-pointer"
-                    >
+                    <a className="flex items-center p-2 text-gray-600 hover:bg-gray-100 rounded-md">
                       <MessageSquare className="w-5 h-5 mr-2 text-gray-500" />
                       Chat
-                    </div>
+                    </a>
                   </li>
                   <li>
-                    <div
-                      onClick={() => navigate('/appointments')}
-                      className="flex items-center justify-between p-2 text-gray-600 hover:bg-gray-100 rounded-md cursor-pointer"
-                    >
+                    <a className="flex items-center justify-between p-2 text-gray-600 hover:bg-gray-100 rounded-md">
                       <div className="flex items-center">
                         <FileText className="w-5 h-5 mr-2 text-gray-500" />
                         Appointments
@@ -200,7 +177,7 @@ const PetVetDashboard = () => {
                       <span className="bg-red-500 text-white text-xs rounded-full w-5 h-5 flex items-center justify-center">
                         {dashboardData.pendingAppointments || 0}
                       </span>
-                    </div>
+                    </a>
                   </li>
                 </ul>
               </div>
@@ -208,31 +185,22 @@ const PetVetDashboard = () => {
               <div>
                 <ul className="space-y-2">
                   <li>
-                    <div
-                      onClick={() => navigate('/settings')}
-                      className="flex items-center p-2 text-gray-600 hover:bg-gray-100 rounded-md cursor-pointer"
-                    >
+                    <a className="flex items-center p-2 text-gray-600 hover:bg-gray-100 rounded-md">
                       <Settings className="w-5 h-5 mr-2 text-gray-500" />
                       Settings
-                    </div>
+                    </a>
                   </li>
                   <li>
-                    <div
-                      onClick={() => navigate('/documentation')}
-                      className="flex items-center p-2 text-gray-600 hover:bg-gray-100 rounded-md cursor-pointer"
-                    >
+                    <a className="flex items-center p-2 text-gray-600 hover:bg-gray-100 rounded-md">
                       <FileText className="w-5 h-5 mr-2 text-gray-500" />
                       Documentation
-                    </div>
+                    </a>
                   </li>
                 </ul>
               </div>
 
               <div className="pt-6">
-                <a
-                  onClick={handleLogout}
-                  className="flex items-center p-2 text-red-500 hover:bg-gray-100 rounded-md cursor-pointer"
-                >
+                <a className="flex items-center p-2 text-red-500 hover:bg-gray-100 rounded-md">
                   <LogOut className="w-5 h-5 mr-2" />
                   Log out
                 </a>

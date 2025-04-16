@@ -21,19 +21,19 @@ const Signup = () => {
   // Redirect if user is already logged in
   useEffect(() => {
     if (user) {
-      if (user.role === 'veterinarian') {
+      if (user.role === "veterinarian") {
         if (user.onboardingStep === 0) {
-          navigate('/personal-info');
+          navigate("/personal-info");
         } else {
-          navigate('/dashboard');
+          navigate("/dashboard");
         }
-      } else if (user.role === 'pet_owner') {
+      } else if (user.role === "pet_owner") {
         if (user.onboardingStep === 0) {
-          navigate('/personal-info');
+          navigate("/personal-info");
         } else if (user.onboardingStep === 1) {
-          navigate('/add-pet');
+          navigate("/add-pet");
         } else {
-          navigate('/dashboard');
+          navigate("/dashboard");
         }
       }
     }
@@ -56,18 +56,16 @@ const Signup = () => {
     setIsLoading(true);
 
     try {
-      const userData = {
+      await register({
         email,
         password,
-        role: userType, // Now userType is already set to 'pet_owner' or 'veterinarian'
+        role: userType === "pet-owner" ? "pet_owner" : "veterinarian",
         firstName,
-        lastName
-      };
-
-      await register(userData);
+        lastName,
+      });
 
       // Directly navigate to PersonalInfo after successful registration
-      navigate('/login');
+      navigate("/personal-info");
     } catch (error) {
       setErrorMessage(error.response?.data?.message || "Registration failed");
     } finally {
@@ -76,9 +74,12 @@ const Signup = () => {
   };
 
   return (
-    <div className="min-h-screen w-full flex" style={{ backgroundColor: "#5FAFA126" }}>
+    <div
+      className="min-h-screen w-full flex"
+      style={{ backgroundColor: "#5FAFA126" }}
+    >
       {/* Left side with illustration */}
-       <div className="w-1/2 pl-20 pr-10 py-10 flex flex-col">
+      <div className="w-1/2 pl-20 pr-10 py-10 flex flex-col">
         <div className="mb-8">
           <div className="flex items-center space-x-2">
             <img src={Foot} alt="Pet Vet Logo" className="w-8 h-8" />
@@ -123,11 +124,9 @@ const Signup = () => {
         </div>
       </div>
 
-
       {/* Right side with form */}
       <div className="w-1/2 my-6 ml-auto bg-[rgba(95,175,161,0.15)] rounded-l-3xl shadow-xl px-12 py-14 flex items-center justify-center">
         <div className="w-full max-w-sm">
-
           {/* Paw Logo */}
           <div className="flex justify-center mb-8">
             <img src={Foot} alt="Logo" className="w-16 h-16" />
@@ -152,15 +151,17 @@ const Signup = () => {
           <form onSubmit={handleSubmit} className="space-y-4">
             {/* User Type Selection */}
             <div>
-              <label className="block text-sm font-medium text-gray-700 mb-1">I am a:</label>
+              <label className="block text-sm font-medium text-gray-700 mb-1">
+                I am a:
+              </label>
               <div className="grid grid-cols-2 gap-4">
                 <div
                   className={`border rounded-md p-4 cursor-pointer flex flex-col items-center justify-center ${
-                    userType === "pet_owner"
+                    userType === "petOwner"
                       ? "border-[#030b0a] bg-[#2D746D4D]"
                       : "border-gray-200 hover:border-gray-300"
                   }`}
-                  onClick={() => setUserType("pet_owner")}
+                  onClick={() => setUserType("petOwner")}
                 >
                   <div className="text-2xl mb-1">🐾</div>
                   <div className="text-sm font-medium">Pet Owner</div>
@@ -181,7 +182,10 @@ const Signup = () => {
 
             {/* Email Field */}
             <div>
-              <label htmlFor="email" className="block text-sm font-medium text-gray-700 mb-1">
+              <label
+                htmlFor="email"
+                className="block text-sm font-medium text-gray-700 mb-1"
+              >
                 Email
               </label>
               <div className="relative">
@@ -212,7 +216,10 @@ const Signup = () => {
 
             {/* First Name Field */}
             <div>
-              <label htmlFor="firstName" className="block text-sm font-medium text-gray-700 mb-1">
+              <label
+                htmlFor="firstName"
+                className="block text-sm font-medium text-gray-700 mb-1"
+              >
                 First Name
               </label>
               <div className="relative">
@@ -245,7 +252,10 @@ const Signup = () => {
 
             {/* Last Name Field */}
             <div>
-              <label htmlFor="lastName" className="block text-sm font-medium text-gray-700 mb-1">
+              <label
+                htmlFor="lastName"
+                className="block text-sm font-medium text-gray-700 mb-1"
+              >
                 Last Name
               </label>
               <div className="relative">
@@ -278,7 +288,10 @@ const Signup = () => {
 
             {/* Password Field */}
             <div>
-              <label htmlFor="password" className="block text-sm font-medium text-gray-700 mb-1">
+              <label
+                htmlFor="password"
+                className="block text-sm font-medium text-gray-700 mb-1"
+              >
                 Password
               </label>
               <div className="relative">
@@ -332,14 +345,30 @@ const Signup = () => {
             >
               {isLoading ? (
                 <>
-                  <svg className="animate-spin -ml-1 mr-2 h-4 w-4 text-white" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
-                    <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4"></circle>
-                    <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
+                  <svg
+                    className="animate-spin -ml-1 mr-2 h-4 w-4 text-white"
+                    xmlns="http://www.w3.org/2000/svg"
+                    fill="none"
+                    viewBox="0 0 24 24"
+                  >
+                    <circle
+                      className="opacity-25"
+                      cx="12"
+                      cy="12"
+                      r="10"
+                      stroke="currentColor"
+                      strokeWidth="4"
+                    ></circle>
+                    <path
+                      className="opacity-75"
+                      fill="currentColor"
+                      d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"
+                    ></path>
                   </svg>
                   Processing...
                 </>
               ) : (
-                'Sign Up'
+                "Sign Up"
               )}
             </button>
           </form>
@@ -347,7 +376,10 @@ const Signup = () => {
           {/* Login Link */}
           <p className="mt-6 text-center text-sm text-gray-600">
             Already have an account?{" "}
-            <Link to="/login" className="text-[#3B9C91] hover:text-[#2f7d75] font-medium transition">
+            <Link
+              to="/login"
+              className="text-[#3B9C91] hover:text-[#2f7d75] font-medium transition"
+            >
               Log In
             </Link>
           </p>
