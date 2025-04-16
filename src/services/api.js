@@ -1,7 +1,6 @@
 import axios from "axios";
 
-// Use relative URL for API requests to leverage the proxy in vercel.json
-const API_URL = "/api";
+const API_URL = "https://vercel-backend-eta-five.vercel.app/api";
 
 // Create axios instance
 const api = axios.create({
@@ -9,7 +8,6 @@ const api = axios.create({
   headers: {
     "Content-Type": "application/json",
   },
-  withCredentials: false,
 });
 
 // Add request interceptor to add auth token to requests
