@@ -1,26 +1,28 @@
-import axios from 'axios';
+import axios from "axios";
 
-const API_URL = 'https://vercel-backend-eta-five.vercel.app/api';
+// Use relative URL for API requests to leverage the proxy in vercel.json
+const API_URL = "/api";
 
 // Create axios instance
 const api = axios.create({
   baseURL: API_URL,
   headers: {
-    'Content-Type': 'application/json',
+    "Content-Type": "application/json",
   },
+  withCredentials: false,
 });
 
 // Add request interceptor to add auth token to requests
 api.interceptors.request.use(
   (config) => {
-    const token = localStorage.getItem('token');
+    const token = localStorage.getItem("token");
     if (token) {
       config.headers.Authorization = `Bearer ${token}`;
     }
     return config;
   },
   (error) => {
-    console.error('Request error:', error);
+    console.error("Request error:", error);
     return Promise.reject(error);
   }
 );
@@ -31,18 +33,18 @@ api.interceptors.response.use(
     return response;
   },
   (error) => {
-    console.error('Response error:', error);
+    console.error("Response error:", error);
     if (error.response) {
       // The request was made and the server responded with a status code
       // that falls out of the range of 2xx
-      console.error('Error data:', error.response.data);
-      console.error('Error status:', error.response.status);
+      console.error("Error data:", error.response.data);
+      console.error("Error status:", error.response.status);
     } else if (error.request) {
       // The request was made but no response was received
-      console.error('Error request:', error.request);
+      console.error("Error request:", error.request);
     } else {
       // Something happened in setting up the request that triggered an Error
-      console.error('Error message:', error.message);
+      console.error("Error message:", error.message);
     }
     return Promise.reject(error);
   }
