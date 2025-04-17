@@ -1,6 +1,6 @@
 import axios from "axios";
 
-const API_URL = "https://vercel-backend-umber-iota.vercel.app/api";
+const API_URL = "https://vercel-backend-gray-eta.vercel.app/api";
 
 // Create axios instance
 const api = axios.create({
