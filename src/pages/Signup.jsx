@@ -3,7 +3,7 @@ import { Link, useNavigate } from "react-router-dom";
 import Foot from "../assets/images/Foot.png";
 import GoogleLogo from "../assets/images/google.png";
 import { useAuth } from "../contexts/AuthContext";
-import petimg from "../assets/images/pet-dog.png";
+import Petimg from "../assets/images/pet-dog.png";
 
 const Signup = () => {
   const [userType, setUserType] = useState(null);
@@ -97,7 +97,7 @@ const Signup = () => {
           <div className="mt-8 w-full max-w-lg ml-4">
             <div className="relative">
               <img
-                src={petimg}
+                src={Petimg}
                 alt="Pet owner with pets"
                 className="w-full rounded-lg"
               />
